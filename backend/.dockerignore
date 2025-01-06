@@ -1,0 +1,6 @@
+.git
+.gitignore
+
+app/config/reference/
+app/test/
+app/script/
