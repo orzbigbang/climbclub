@@ -20,9 +20,9 @@ elif os.getenv("BUILD_ENV") == "local":
 class Settings(BaseSettings):
     ALLOWED_ORIGINS: str = "*"
     ALLOWED_IPS: str = "*"
-    DB_URL: str = "postgresql+asyncpg://root:postgres@db:5432/root"
+    DB_URL: str
     DB_POOL_SIZE: int = 10
-    SECRET_KEY: str = "ee5a9befa799d23415228efba2d2f05dadb30749ba43e37461401d456d55ef15"
+    SECRET_KEY: str
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
     INIT_SCHEDULE_TASK: bool = False
@@ -40,13 +40,14 @@ class Settings(BaseSettings):
     CLIENT_SECRET: str = ""
 
     class CONST:
-        APP: str = "7cloud"
+        APP_NAME: str = "climb-club"
+        API_VER: str = "v1"
 
     class SETTING:
-        USE_REDIS: bool = True
-        PRELOAD_REDIS: bool = True
         APP_FOLDER: str = app_dir
         LOCAL_LOG_PATH: str = os.path.join(api_dir, "log/syslog.log")
+        DOCKER_LOG_PATH: str = '/var/log/syslog.log'
+        BUILD_ENV: str = os.getenv("BUILD_ENV", "local")
 
     def __init__(self):
         temp_env = {}

@@ -25,26 +25,8 @@ async def lifespan(__app: FastAPI):
     try:
         async with engine.begin() as conn:
             await conn.run_sync(Base.metadata.create_all)
-    except socket.gaierror as e:
+    except (socket.gaierror, OSError) as e:
         logger.warning(f"db disconnected. error message: {e}")
-
-    # check redis connection
-    try:
-        if settings.SETTING.USE_REDIS:
-            client = redis.from_url(f"redis://{settings.REDIS_HOST}", decode_responses=True)
-            client.ping()
-            logger.info("redis connection SUCCEEDED. using redis to cache")
-
-            # preload redis cache here
-            if settings.SETTING.PRELOAD_REDIS:
-                from utils.redis_util import preload_redis
-                await asyncio.get_running_loop().create_task(preload_redis())
-        else:
-            logger.warning("USE_REDIS setting is False. no-redis cache")
-
-    except (redis.exceptions.ConnectionError, redis.exceptions.TimeoutError) as e:
-        settings.SETTING.USE_REDIS = False
-        logger.error("redis connection FAILED. no-redis cache")
 
     yield
 
@@ -85,19 +67,7 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
                  "detail": exc.errors(),
                  "body": exc.body},
     )
-
-
-@app.exception_handler(redis.exceptions.ConnectionError)
-async def redis_exception_handler_1(request: Request, exc: redis.exceptions.ConnectionError):
-    logger.error({"detail": "redis connection error"}, extra=request.url.path)
-    settings.SETTING.USE_REDIS = False
-
-
-@app.exception_handler(redis.exceptions.TimeoutError)
-async def redis_exception_handler_2(request: Request, exc: redis.exceptions.TimeoutError):
-    logger.error({"detail": "redis timeout error"}, extra=request.url.path)
-    settings.SETTING.USE_REDIS = False
-
+    
 
 # middlewares
 app.add_middleware(

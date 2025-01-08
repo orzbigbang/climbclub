@@ -28,11 +28,11 @@ ACCESS_TOKEN_EXP = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
 
 
 # region rsa encrypt
-with open(f"resources/{os.getenv('BUILD_ENV')}/public_key.pem", "r", encoding="utf-8") as fp:
+with open(f"{settings.SETTING.APP_FOLDER}/resources/{settings.SETTING.BUILD_ENV}/public_key.pem", "r", encoding="utf-8") as fp:
     RSA_PUBLIC_KEY = fp.read()
 
 
-with open(f"resources/{os.getenv('BUILD_ENV')}/private_key.pem", "rb") as fp:
+with open(f"{settings.SETTING.APP_FOLDER}/resources/{settings.SETTING.BUILD_ENV}/private_key.pem", "rb") as fp:
     RSA_PRIVATE_KEY = serialization.load_pem_private_key(
         fp.read(),
         password=None

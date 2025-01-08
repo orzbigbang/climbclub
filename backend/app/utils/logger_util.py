@@ -18,7 +18,7 @@ class Logger(logging.Logger):
         return instance
 
     def __init__(self):
-        super().__init__("cc_data_api_log", level=logging.INFO)
+        super().__init__(settings.CONST.APP_NAME, level=logging.INFO)
         self.file_handler = None
         self.console_handler = None
         self._get_file_handler()
@@ -28,7 +28,7 @@ class Logger(logging.Logger):
         if platform.system() != "Linux":
             self.file_handler = RotatingFileHandler(settings.SETTING.LOCAL_LOG_PATH, maxBytes=100 * 1024, backupCount=3)
         else:
-            self.file_handler = RotatingFileHandler('/var/log/syslog.log', maxBytes=100 * 1024, backupCount=3)
+            self.file_handler = RotatingFileHandler(settings.SETTING.DOCKER_LOG_PATH, maxBytes=100 * 1024, backupCount=3)
 
         self.file_handler.setLevel(logging.INFO)
         self.addHandler(self.file_handler)
@@ -37,7 +37,7 @@ class Logger(logging.Logger):
         self.addHandler(self.console_handler)
 
     def _set_format(self):
-        log_format = "%(asctime)s - %(levelname)s - [ stack: blm, app: cc_data_api, api_call: %(api_call)s ] - message: %(message)s"
+        log_format = f"%(asctime)s - %(levelname)s - [ app: {settings.CONST.APP_NAME}, api_call: %(api_call)s ] - message: %(message)s"
         formatter = logging.Formatter(log_format)
         self.file_handler.setFormatter(formatter)
         self.console_handler.setFormatter(formatter)
