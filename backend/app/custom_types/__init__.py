@@ -2,7 +2,11 @@ import dataclasses
 from typing import TypedDict
 from enum import Enum
 
-from database import User
+
+class Gender(str, Enum):
+    Male = "Male"
+    Female = "Female"
+    Other = "Other"
 
 
 class SystemUser(str, Enum):
@@ -21,4 +25,4 @@ class UserWithToken:
     id_token: str
 
 
-CurrentUser = User | UserWithToken
+CurrentUser = UserWithToken

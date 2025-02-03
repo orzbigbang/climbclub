@@ -1,15 +1,17 @@
-from .login_router import router as login_router
-from .test_router import router as test_router
+from .login import router as login_router
+from .openai import router as openai_router
+from .user import router as user_router
 
+from config import settings
 
 from fastapi import APIRouter
 
 
-router = APIRouter()
+router = APIRouter(prefix=f"/api/{settings.CONST.API_VER}")
 
-router.include_router(login_router)
-router.include_router(test_router)
-
+router.include_router(login_router, prefix="/account", tags=["login"])
+router.include_router(openai_router, prefix="/openai", tags=["openai"])
+router.include_router(user_router, prefix="/users", tags=["user"])
 
 import os
 from .private import router as private_router

@@ -1,88 +1,69 @@
-<script setup>
-import {useScroll} from '@/compositions/scroll.js'
-useScroll()
-
-import {getRandomSentences, getRandomColors} from '@/compositions/randomThing.js'
-const randomSentences = getRandomSentences()
-const randomColors = getRandomColors()
-</script>
-
 <template>
-  <section class="section-wrapper scene-0">
-    <div class="type-wrapper flex-center" v-for="sentence, index in randomSentences" :style="{ backgroundColor: randomColors[index] }">
-      <div class="reveal-type">{{ sentence }}</div>
+  <div class="container flex-col-center">
+    <div class="ribbon-wrapper flex-col-between">
+      <div class="ribbon flex-center" v-for="_ in 2">
+        <div class="block" v-for="_ in 100">
+          {{ text }}
+        </div>
+      </div>
     </div>
-  </section>
-
-  <section class="section-wrapper scene-1 paper-feel-bg">
-    <div class="transition-wrapper wrapper flex-center pos-rel">
-      <h2 class="transition-text z-1">Go E<div class="zoom-in-word">x</div>plore</h2>
-    </div>
-  </section>
-
-  <section class="section-wrapper scene-2 pos-rel z-100">
-    <div class="wrapper flex-center">
-      <h2>Welcome to the Climb Club</h2>
-    </div>
-  </section>
+  </div>
 </template>
+  
+<script setup>
+import { onMounted } from 'vue';
+import {ScrambleTextPlugin} from 'gsap-trial/dist/ScrambleTextPlugin'
+const text = "Developing "
+const chars = "0123456789abcdef"
 
+onMounted(() => {
+  const element = document.querySelectorAll(".block")
+  const tl = gsap.timeline({defaults: {duration: 2, ease: "none"}});
+  gsap.registerPlugin(ScrambleTextPlugin)
+  // tl.to(element, {duration: 2, scrambleText:{text:text, chars:chars, revealDelay:0.5, tweenLength:false}})
+})
+</script>
+  
 <style lang='less' scoped>
-@scene2-color: #ff6347;
+@color: #333;
 
-.wrapper {
-  min-height: 100vh;
-}
+  .container {
+    min-height: 100vh;
+    
+    .ribbon-wrapper {
+      width: 100vw;
+      height: 40vh;
 
-.scene-0 {
-  .type-wrapper {
-    height: 70vh;
-    width: 100vw;
-    padding: 0 15%;
-    margin: 0 auto;
-  
-    .reveal-type {
-      width: 100%;
-      font-size: 36px;
-      font-weight: bold;
-      text-align: center;
-    }
-  }
-}
-
-.paper-feel-bg {
-  background: 
-    linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(240, 240, 240, 1)), /* 渐变底色 */
-    radial-gradient(rgba(0, 0, 0, 0.05), transparent 70%), /* 噪点图案 */
-    radial-gradient(rgba(0, 0, 0, 0.1), transparent 50%) /* 额外层次感 */;
-  background-blend-mode: overlay, overlay;
-  background-size: 100% 100%, 8px 8px, 5px 5px; /* 第二、三层噪点密度调整 */
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1); /* 添加内阴影增强纸感 */
-}
-
-.scene-1 {
-  .transition-text {
-    font-size: 64px;
-    transform-origin: center center;
-  
-    .zoom-in-word {
-      display: inline-block;
-      color: @scene2-color;
+      .ribbon {
+        height: 35%;
+        // width: 100vw;
+        color: @color;
+        font-size: 48px;
+        font-weight: 400;
+        font-family: "Smooch Sans";
+        border-bottom: 2px solid @color;
+        border-top: 2px solid @color;
+        gap: 1%;
+        transform-origin: center;
+        
+        &:nth-child(1) {
+          transform: rotateZ(-10deg) translateY(100px);
+        }
+        
+        &:nth-child(2) {
+          transform: rotateZ(15deg) translateY(-100px);
+        }
+        
+        .block {
+          animation: move 60s infinite linear;
+        }
+      }
     }
   }
 
-  &::after {
-    &:extend(.paper-feel-bg);
-    content: "";
-    display: block;
-    height: 70vh;
+  @keyframes move {
+    50% {
+      transform: translateX(-3000px);
+    }
   }
-}
-
-.scene-2 {
-  width: 100vw;
-  height: 100vh;
-  background-color: @scene2-color;
-  display: none;
-}
 </style>

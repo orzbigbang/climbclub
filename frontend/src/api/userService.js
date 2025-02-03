@@ -2,6 +2,9 @@
 import axiosInstance from './axiosInstance';
 
 const userService = {
+  hasUser(username) {
+    return axiosInstance.get(`/users/exists?username=${username}`);
+  },
   getUser(userId) {
     return axiosInstance.get(`/users/${userId}`);
   },
@@ -14,6 +17,9 @@ const userService = {
   deleteUser(userId) {
     return axiosInstance.delete(`/users/${userId}`);
   },
+  getAllUsers() {
+    return axiosInstance.get('/users');
+  }
 };
 
 export default userService;

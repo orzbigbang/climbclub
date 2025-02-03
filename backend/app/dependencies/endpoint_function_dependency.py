@@ -1,4 +1,4 @@
-from fastapi import Depends
+from fastapi import Depends, Cookie
 from fastapi.security import OAuth2PasswordBearer
 from typing import Annotated
 import jwt
@@ -11,8 +11,9 @@ from custom_types import CurrentUser
 from config import settings
 
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/1/login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/v1/account/login")
 SECRET_KEY = settings.SECRET_KEY
+REFRESH_SECRET_KEY = settings.REFRESH_SECRET_KEY
 ALGORITHM = settings.ALGORITHM
 
 
@@ -43,3 +44,13 @@ def check_auth(*, access_level: int, get_user: bool = True) -> CurrentUser | Non
                 yield user
 
     return func
+
+
+def check_refresh_token(
+    refresh_token: Annotated[str, Cookie()]
+) -> dict:
+    try:
+        payload = jwt.decode(refresh_token, REFRESH_SECRET_KEY, algorithms=[ALGORITHM])
+        return payload
+    except InvalidTokenError:
+        raise TokenInvalidError

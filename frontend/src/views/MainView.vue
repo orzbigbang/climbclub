@@ -1,9 +1,9 @@
 <script setup>
 import HeroImage from '@/components/HeroImage.vue';
-import HPContent from '@/components/HPContent.vue';
+import ScrollContent from '@/components/ScrollContent.vue';
 </script>
 
 <template>
   <HeroImage/>
-  <HPContent class="hp-section"/>
+  <ScrollContent/>
 </template>

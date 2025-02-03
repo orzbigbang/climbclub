@@ -1,10 +1,14 @@
 @import './base.css';
 
-.container {
-}
-
 .flex-center {
   display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-col-center {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -12,6 +16,13 @@
 .flex-between {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-col-between {
+  display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
 }
@@ -26,6 +37,16 @@
 
 .pos-fix {
   position: fixed;
+}
+
+.pos-x-center {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.pos-y-center {
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .z--1 {

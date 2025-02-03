@@ -5,8 +5,7 @@ const sec = ref("20s")
 </script>
 
 <template>
-  <div class="bg-move flex-center pos-rel">
-  </div>
+  <div class="bg-move"></div>
 </template>
 
 <style lang='less' scoped>

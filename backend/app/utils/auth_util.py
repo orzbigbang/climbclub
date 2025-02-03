@@ -1,4 +1,7 @@
-from fastapi import status, HTTPException, Request
+from fastapi import status, HTTPException, Request, Depends
+from fastapi.security import OAuth2PasswordRequestForm
+from typing import Annotated
+from pydantic import EmailStr
 from datetime import timedelta, datetime, timezone
 import os
 import re
@@ -10,11 +13,11 @@ import jwt
 import jwt.algorithms
 from passlib.context import CryptContext
 from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives.asymmetric import padding
+from cryptography.hazmat.primitives.asymmetric import padding as asymmetric_padding
 from cryptography.hazmat.primitives import serialization
 
-from .crud_util import Session
-from .logger_util import logger
+from utils.crud_util import Session
+from utils.logger_util import logger
 from exceptions import DigestAuthError
 from database import User
 from config import settings
@@ -23,8 +26,10 @@ from custom_types import CurrentUser
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 SECRET_KEY = settings.SECRET_KEY
+REFRESH_SECRET_KEY = settings.REFRESH_SECRET_KEY
 ALGORITHM = settings.ALGORITHM
 ACCESS_TOKEN_EXP = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+REFRESH_TOKEN_EXP = timedelta(days=settings.REFRESH_TOKEN_EXPIRE_DAYS)
 
 
 # region rsa encrypt
@@ -39,14 +44,14 @@ with open(f"{settings.SETTING.APP_FOLDER}/resources/{settings.SETTING.BUILD_ENV}
     )
 
 
-def decrypt_password(encrypted_password: bytes) -> str:
+def decrypt_password(encrypted_password: str) -> str:
+    # 将 Base64 编码的密文转换为字节数组
+    encrypted_bytes = base64.b64decode(encrypted_password)
+    
+    # 使用 PKCS#1 v1.5 填充进行解密
     decrypted = RSA_PRIVATE_KEY.decrypt(
-        encrypted_password,
-        padding.OAEP(
-            mgf=padding.MGF1(algorithm=hashes.SHA256()),
-            algorithm=hashes.SHA256(),
-            label=None
-        )
+        encrypted_bytes,
+        asymmetric_padding.PKCS1v15()  # 使用 PKCS#1 v1.5 填充
     )
     return decrypted.decode()
 # endregion
@@ -68,14 +73,19 @@ def create_access_token(data: dict) -> str:
     return encoded_jwt
 
 
-async def authenticate_user(username: str, encrypted_password: str) -> User | None:
-    async with Session() as db:
-        user = await db.get_user_by_user_name(username)
-    if user is None:
-        return None
+def create_refresh_token(data: dict) -> str:
+    to_encode = data.copy()
+    to_encode.update({"exp": datetime.now(timezone.utc) + REFRESH_TOKEN_EXP})
+    encoded_jwt = jwt.encode(to_encode, REFRESH_SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
 
-    # password = decrypt_password(encrypted_password.encode())
-    password = encrypted_password
+
+async def authenticate_user(username: str, password: str) -> User | None:
+    async with Session() as db:
+        user = await db.get_user_by_username(username)
+        if user is None:
+            return None
+    
     if not verify_password(password, user.hashed_password):
         return None
     return user

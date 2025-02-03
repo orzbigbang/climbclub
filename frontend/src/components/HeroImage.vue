@@ -1,7 +1,13 @@
 <script setup>
-import { ref, useTemplateRef, onMounted, onBeforeUnmount } from 'vue';
+import { useTemplateRef, onMounted, onBeforeUnmount } from 'vue';
 import BIRDS from 'vanta/dist/vanta.birds.min'
 import DOTS from 'vanta/dist/vanta.dots.min'
+import GitHubBotton from './Buttons/GitHubBotton.vue';
+import LoginButton from './Buttons/LoginButton.vue';
+import { useShowStore } from '@/stores/show';
+
+const showStore = useShowStore()
+showStore.loading = true
 
 const vantaRef = useTemplateRef("vantaRef")
 let vantaEffect = null
@@ -29,6 +35,7 @@ onMounted(() => {
 //   scale: 1.00,
 //   scaleMobile: 1.00 
 // })
+  showStore.loading = false
 })
 
 onBeforeUnmount(() => {
@@ -36,75 +43,93 @@ onBeforeUnmount(() => {
     vantaEffect.destroy()
   }
 })
-
-import LoginButton from './LoginButton.vue';
-const sec = ref()
 </script>
 
 <template>
 <div class="main-bg" ref='vantaRef'>
-  <div class="button-wrapper pos-rel z-10 flex-between">
-    <div class="github">
-      <a class="logo-wrapper flex-between" href="https://github.com/orzbigbang/climbclub" target="_blank">
-        <img class="logo" src="@/assets/githublogo.png" alt="GitHub Octocat Logo" />
-        <span class="placeholder"></span>
-        <span>Github</span>
-      </a>
+  <slot>
+    <div class="button-wrapper pos-rel z-10 flex-between">
+      <GitHubBotton/>
+      <LoginButton/>
     </div>
-    <LoginButton class="login-button" @mouse-hover="() => {sec = '5s'}" @mouse-leave="() => {sec = '20s'}"/>
-  </div>
+  </slot>
 
-  <div class="text">
-    <h1>Let's Climb!</h1>
+  <div class="text-wrapper pos-abs z-10 flex-col-between">
+    <h1>Let'<span class="rotating rotating-3">s</span> H<span class="rotating rotating-1">i</span>k<span class="rotating rotating-2">i</span>ng!</h1>
     <p>Aim high and get higher</p>
   </div>
 </div>
 </template>
 
 <style lang='less' scoped>
+@base: 10px;
+
 .main-bg {
   width: 100%;
   height: 80vh;
-  z-index: 1;
-  padding: 2rem;
+  padding: 3 * @base;
   color: white;
 
-  .github {
-    padding: 10px;
-    font-size: 16px;
-    font-weight: 500;
+.text-wrapper {
+  left: 10%;
+  top: 55%;
+  align-items: start;
 
-    .logo-wrapper {
-      .logo {
-        width: 20px;
-        height: 20px;
-      }
+  h1 {
+    font-size: 4.8 * @base;
+    font-weight: bold;
 
-      .placeholder {
-        display: block;
-        width: 5px;
-      }
+    .rotating {
+      display: inline-block;
+      perspective: 10 * @base;
+      transform-style: preserve-3d;
+    }
+    
+    .rotating-1 {
+      color: pink;
+      animation: x-rotating 8s ease-in-out infinite;
+    }
+
+    .rotating-2 {
+      color: pink;
+      animation: x-rotating 10s ease-in-out infinite reverse;
+    }
+
+    .rotating-3 {
+      color: lightgreen;
+      animation: x-rotating 6s ease-in-out infinite reverse;
     }
   }
-
-  .text {
-    position: absolute;
-    left: 10%;
-    top: 55%;
-    display: flex;    
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: start;
-
-    h1 {
-      font-size: 48px;
-      font-weight: 700;
-    }
 
     p {
-      font-size: 20px;
-      font-weight: 400;
+      font-size: 2 * @base;
+      font-weight: normal;
     }
   }
+}
+
+@keyframes x-rotating {
+  30% {
+    transform: rotate3d(1, 0, 0, 0deg) scale(1);
+  }
+  50% {
+    transform: rotate3d(1, 0, 0, 1080deg) scale(1.2);
+  }
+  60% {
+    transform: rotate3d(1, 0, 0, 720deg) scale(1.2);
+  }
+  100% {
+    transform: rotate3d(1, 0, 0, 360deg) scale(1);
+  }
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity .2s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 </style>

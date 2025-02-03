@@ -1,4 +1,4 @@
-function getRandomNumbers(min, max, count) {
+const getRandomNumbers = (min, max, count) => {
   const range = Array.from({ length: max - min + 1 }, (_, i) => i + min);
 
   for (let i = range.length - 1; i > 0; i--) {
@@ -10,14 +10,10 @@ function getRandomNumbers(min, max, count) {
 }
 
 const colors = [
-  "#E0F7FA",
-  "#F3E5F5",
-  "#FFEBEE",
-  "#E8F5E9",
   "#FAF3DD",
+  "#6fdc73",
   "#FFEB3B",
   "#FF9800",
-  "#6fdc73",
   "#97b7f8",
 ]
 
@@ -44,7 +40,7 @@ const sentences = [
   "The mountains are a reminder that the world is still wild and full of wonders."
 ]
 
-export function getRandomSentences(count=5) {
+export const getRandomSentences = (count=5) => {
   const randomNumbers = getRandomNumbers(0, sentences.length - 1, count)
   const randomSentences = []
   
@@ -56,14 +52,7 @@ export function getRandomSentences(count=5) {
 }
 
 
-export function getRandomColors(count=5) {
-  const randomNumbers = getRandomNumbers(0, colors.length - 1, count)
-  const randomColors = []
-  
-  for (let num of randomNumbers) {
-    randomColors.push(colors[num])
-  }
-
-  return randomColors
+export const getRandomColors = (count=5) => {
+  return colors
 }
 

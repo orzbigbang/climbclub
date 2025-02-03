@@ -1,6 +1,8 @@
 from pydantic_settings import BaseSettings
 import os
 import platform
+import pytz
+import pytz.tzinfo
 
 
 current_file_path = os.path.abspath(__file__)
@@ -18,30 +20,37 @@ elif os.getenv("BUILD_ENV") == "local":
 
 
 class Settings(BaseSettings):
-    ALLOWED_ORIGINS: str = "*"
+    ALLOWED_ORIGINS: str = "http://localhost:5173"
     ALLOWED_IPS: str = "*"
     DB_URL: str
     DB_POOL_SIZE: int = 10
     SECRET_KEY: str
+    REFRESH_SECRET_KEY: str
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
-    INIT_SCHEDULE_TASK: bool = False
-    CRONTAB_INTERVAL: str = "0 * * * *"
-    USER_DEFAULT_AUTHORITY_CODE: int = 6
-    HTTP_DIGEST_AUTH_PASSWORD: str = "dummy"
-    AWS_ACCOUNT_ID: str = "739616288903"
-    S3_BUCKET: str = "7cloud-media"
-    S3_REGION: str = "ap-northeast-1"
-    USER_POOL_ID: str = ""
-    USER_POOL_REGION: str = ""
-    IDENTITY_POOL_REGION: str = ""
-    IDENTITY_POOL_ID: str = ""
-    CLIENT_ID: str = ""
-    CLIENT_SECRET: str = ""
+    REFRESH_TOKEN_EXPIRE_DAYS: int = 7
+    API_KEY: str
+    HTTP_DIGEST_AUTH_PASSWORD: str
+    USER_DEFAULT_AUTHORITY_CODE: int = 4
+    USER_INACTIVE_AUTHORITY_CODE: int = 99
+
+    # INIT_SCHEDULE_TASK: bool = False
+    # CRONTAB_INTERVAL: str = "0 * * * *"
+    # AWS_ACCOUNT_ID: str = "739616288903"
+    # S3_BUCKET: str = "7cloud-media"
+    # S3_REGION: str = "ap-northeast-1"
+    # USER_POOL_ID: str = ""
+    # USER_POOL_REGION: str = ""
+    # IDENTITY_POOL_REGION: str = ""
+    # IDENTITY_POOL_ID: str = ""
+    # CLIENT_ID: str = ""
+    # CLIENT_SECRET: str = ""
 
     class CONST:
         APP_NAME: str = "climb-club"
         API_VER: str = "v1"
+        TINEZONE_STR: str = 'Asia/Tokyo'
+        TIMEZONE: pytz.tzinfo.DstTzInfo = pytz.timezone(TINEZONE_STR)
 
     class SETTING:
         APP_FOLDER: str = app_dir

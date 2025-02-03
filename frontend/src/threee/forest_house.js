@@ -31,18 +31,6 @@ directionalLight.shadow.mapSize.height = 2048;
 directionalLight.shadow.camera.far = 1000;
 scene.add(directionalLight);
 
-// Add ground plane
-// const groundGeometry = new THREE.PlaneGeometry(100, 100);
-// const groundMaterial = new THREE.MeshStandardMaterial({ 
-//     color: 0x556B2F,
-//     roughness: 0.8,
-//     metalness: 0.2
-// });
-// const ground = new THREE.Mesh(groundGeometry, groundMaterial);
-// ground.rotation.x = -Math.PI / 2;
-// ground.receiveShadow = true;
-// scene.add(ground);
-
 // Load the forest house model
 const loader = new GLTFLoader();
 loader.load(

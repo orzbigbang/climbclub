@@ -77,10 +77,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-app.middleware("http")(RouteDistributor())
-app.middleware("http")(AddHeader())
-app.middleware("http")(TimeRecorder())
-
+# app.middleware("http")(RouteDistributor())
+# app.middleware("http")(AddHeader())
+# app.middleware("http")(TimeRecorder())
 
 # routers
 from routers import router

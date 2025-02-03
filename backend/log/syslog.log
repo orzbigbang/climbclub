@@ -14,3 +14,21 @@
 2025-01-08 17:54:07,031 - INFO - [ app: climb-club, api_call: lifespan ] - message: Using event loop: <_WindowsSelectorEventLoop running=True closed=False debug=False>
 2025-01-08 17:54:55,910 - INFO - [ app: climb-club, api_call: lifespan ] - message: Using event loop: <_WindowsSelectorEventLoop running=True closed=False debug=False>
 2025-01-08 17:55:00,034 - WARNING - [ app: climb-club, api_call: lifespan ] - message: db disconnected. error message: Multiple exceptions: [Errno 10061] Connect call failed ('::1', 5433, 0, 0), [Errno 10061] Connect call failed ('127.0.0.1', 5433)
+2025-01-08 20:27:12,783 - INFO - [ app: climb-club, api_call: lifespan ] - message: Using event loop: <_WindowsSelectorEventLoop running=True closed=False debug=False>
+2025-01-08 20:27:16,843 - WARNING - [ app: climb-club, api_call: lifespan ] - message: db disconnected. error message: Multiple exceptions: [Errno 10061] Connect call failed ('::1', 5433, 0, 0), [Errno 10061] Connect call failed ('127.0.0.1', 5433)
+2025-01-08 20:29:03,944 - INFO - [ app: climb-club, api_call: lifespan ] - message: Using event loop: <_WindowsSelectorEventLoop running=True closed=False debug=False>
+2025-01-08 20:29:08,022 - WARNING - [ app: climb-club, api_call: lifespan ] - message: db disconnected. error message: Multiple exceptions: [Errno 10061] Connect call failed ('::1', 5433, 0, 0), [Errno 10061] Connect call failed ('127.0.0.1', 5433)
+2025-01-08 20:29:36,457 - INFO - [ app: climb-club, api_call: /api/v1/openai ] - message: {'start_time_jst': '2025-01-09T05:29:36.457465'}
+2025-01-08 20:29:36,458 - INFO - [ app: climb-club, api_call: /api/v1/openai ] - message: {'end_time_jst': '2025-01-09T05:29:36.458504', 'duration': '0.00104'}
+2025-01-08 20:29:49,593 - INFO - [ app: climb-club, api_call: /api/v1/openai/ ] - message: {'start_time_jst': '2025-01-09T05:29:49.592983'}
+2025-01-08 20:29:49,593 - INFO - [ app: climb-club, api_call: /api/v1/openai/ ] - message: {'end_time_jst': '2025-01-09T05:29:49.593706', 'duration': '0.00072'}
+2025-01-08 20:29:55,736 - INFO - [ app: climb-club, api_call: /api/v1/openai/message ] - message: {'start_time_jst': '2025-01-09T05:29:55.736894'}
+2025-01-08 20:29:55,739 - ERROR - [ app: climb-club, api_call: request_body_validation ] - message: {'detail': [{'type': 'missing', 'loc': ('query', 'message'), 'msg': 'Field required', 'input': None}], 'body': None}
+2025-01-08 20:29:55,740 - INFO - [ app: climb-club, api_call: /api/v1/openai/message ] - message: {'end_time_jst': '2025-01-09T05:29:55.740536', 'duration': '0.00364'}
+2025-01-08 20:30:17,662 - INFO - [ app: climb-club, api_call: /api/v1/openai/message ] - message: {'start_time_jst': '2025-01-09T05:30:17.662774'}
+2025-01-08 20:30:17,663 - ERROR - [ app: climb-club, api_call: request_body_validation ] - message: {'detail': [{'type': 'missing', 'loc': ('query', 'message'), 'msg': 'Field required', 'input': None}], 'body': None}
+2025-01-08 20:30:17,663 - INFO - [ app: climb-club, api_call: /api/v1/openai/message ] - message: {'end_time_jst': '2025-01-09T05:30:17.663976', 'duration': '0.00120'}
+2025-01-08 20:30:33,468 - INFO - [ app: climb-club, api_call: /api/v1/openai/message ] - message: {'start_time_jst': '2025-01-09T05:30:33.468656'}
+2025-01-08 20:30:33,471 - INFO - [ app: climb-club, api_call: /api/v1/openai/message ] - message: {'end_time_jst': '2025-01-09T05:30:33.471249', 'duration': '0.00259'}
+2025-01-08 20:30:53,289 - INFO - [ app: climb-club, api_call: lifespan ] - message: Using event loop: <_WindowsSelectorEventLoop running=True closed=False debug=False>
+2025-01-08 20:30:57,367 - WARNING - [ app: climb-club, api_call: lifespan ] - message: db disconnected. error message: Multiple exceptions: [Errno 10061] Connect call failed ('::1', 5433, 0, 0), [Errno 10061] Connect call failed ('127.0.0.1', 5433)

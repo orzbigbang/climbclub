@@ -87,6 +87,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+body {
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", "Heiti SC", sans-serif;
+}
+
 a {
   text-decoration: none;
 }
