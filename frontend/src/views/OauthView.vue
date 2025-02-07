@@ -14,7 +14,7 @@ const loginSuccess = (response) => {
   accountStore.login(response)
   showStore.showLoading(
     new Promise((resolve) => {setTimeout(resolve, 1000);}), 
-    navigationStore.navigateHome()
+    navigationStore.navigateHome
   )
 }
 

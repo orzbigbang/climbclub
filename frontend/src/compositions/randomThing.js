@@ -1,3 +1,8 @@
+export const getRandomNumber = (min, max) => {
+
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
 const getRandomNumbers = (min, max, count) => {
   const range = Array.from({ length: max - min + 1 }, (_, i) => i + min);
 
@@ -11,10 +16,12 @@ const getRandomNumbers = (min, max, count) => {
 
 const colors = [
   "#FAF3DD",
-  "#6fdc73",
-  "#FFEB3B",
-  "#FF9800",
-  "#97b7f8",
+  'linear-gradient(135deg, #ff9a9e, #fad0c4)',
+  'radial-gradient(70.77% 70.77% at 0% 70.77%, rgb(255, 217, 176) 0%, rgb(253, 159, 59) 80.73%, rgb(255, 135, 9) 100%',
+  // "#6fdc73",
+  // "#FFEB3B",
+  // "#FF9800",
+  // "#97b7f8",
 ]
 
 const sentences = [
@@ -40,7 +47,7 @@ const sentences = [
   "The mountains are a reminder that the world is still wild and full of wonders."
 ]
 
-export const getRandomSentences = (count=5) => {
+export const getRandomSentences = (count=3) => {
   const randomNumbers = getRandomNumbers(0, sentences.length - 1, count)
   const randomSentences = []
   
@@ -52,7 +59,7 @@ export const getRandomSentences = (count=5) => {
 }
 
 
-export const getRandomColors = (count=5) => {
+export const getRandomColors = (count=3) => {
   return colors
 }
 

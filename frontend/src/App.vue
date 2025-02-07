@@ -1,6 +1,5 @@
 <script setup>
 import AITalk from '@/components/Utils/AITalk.vue';
-import HoverButton from '@/components/Buttons/HoverButton.vue';
 import GlobalNotification from '@/components/Utils/GlobalNotification.vue'
 import Loading from '@/components/Utils/Loading.vue';
 import { onMounted, watch } from 'vue';
@@ -30,7 +29,6 @@ onMounted(async () => {
 
 <template>
   <!-- <AITalk/> -->
-  <!-- <HoverButton/> -->
   <Loading />
   <GlobalNotification />
   <RouterView></RouterView>

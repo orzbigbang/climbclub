@@ -1,13 +1,12 @@
 <script setup>
-import { storeToRefs } from 'pinia';
-import {useAccountStore} from '@/stores/account';
-import { useNavigationStore } from '@/stores/navigation';
-import Cookies from 'js-cookie';
-import UserIcon from '@/components/icons/IconUser.vue';
-import IconSupport from '@/components/icons/IconSupport.vue';
-import LogoutIcon from '@/components/icons/IconLogout.vue';
-import endpoints from '@/api/endpoints';
 import { ref } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useAccountStore } from '@/stores/account';
+import { useNavigationStore } from '@/stores/navigation';
+import LogoutIcon from '@/components/icons/IconLogout.vue';
+import HeartIcon from '@/components/icons/IconHeart.vue';
+import UserIcon from '@/components/icons/IconUser.vue';
+import endpoints from '@/api/endpoints';
 
 const accountStore = useAccountStore();
 const navigationStore = useNavigationStore();
@@ -21,10 +20,10 @@ const profileList = [
     action: () => {
       navigationStore.navigateHome();
     }
-  },  
+  },
   {
     name: 'Support',
-    icon: IconSupport, 
+    icon: HeartIcon, 
     action: () => {
       navigationStore.navigateSupport();
     }
@@ -122,9 +121,6 @@ const profileList = [
 
 .profile-wrapper {
   width: 8rem;
-  height: auto;
-  min-height: 3rem;
-  line-height: 3rem;
   text-align: center;
   text-decoration: none;
   transition: all .5s;
@@ -136,6 +132,7 @@ const profileList = [
   }
 
   .profile-item {
+    margin-bottom: 15px;
     opacity: 0.5;
     cursor: pointer;
     transition: all .2s ease-in-out;
@@ -145,9 +142,8 @@ const profileList = [
       transform: scale(1.2);
     }
 
-    @color: #fff;
     .item-name {
-      color: @color;
+      color: #fff;
       padding-left: 30px;
       position: relative;
 
@@ -158,7 +154,7 @@ const profileList = [
         transform: translateY(-50%);
         width: 20px;
         height: 20px;
-        color: @color;
+        // color: @color;
       }
     }
   }
