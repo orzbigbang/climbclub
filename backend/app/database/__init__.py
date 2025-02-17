@@ -132,3 +132,35 @@ class Mountain(Base):
                                                   insert_default=datetime.now(settings.CONST.TIMEZONE))
     update_datetime: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=True,
                                                       onupdate=datetime.now(settings.CONST.TIMEZONE))
+
+
+class TourCourse(Base):
+    __tablename__ = "t_tour_course"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    mountain_id: Mapped[int] = mapped_column(Integer, nullable=True)
+    course_name: Mapped[str] = mapped_column(String(64), nullable=True)
+    course_distance: Mapped[int] = mapped_column(Integer, nullable=True)
+    course_duration: Mapped[int] = mapped_column(Integer, nullable=True)
+    course_difficulty: Mapped[int] = mapped_column(Integer, nullable=True)
+    
+
+class Tour(Base):
+    __tablename__ = "t_tour"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    name: Mapped[str] = mapped_column(String(64), nullable=True)
+    user_id: Mapped[str] = mapped_column(ForeignKey("t_user.id", ondelete="CASCADE"), nullable=True)
+    tour_date: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=True)
+    mountain_id: Mapped[int] = mapped_column(Integer, nullable=True)
+    tour_up_duration: Mapped[int] = mapped_column(Integer, nullable=True)
+    tour_up_course_id: Mapped[int] = mapped_column(Integer, nullable=True)
+    tour_down_duration: Mapped[int] = mapped_column(Integer, nullable=True)
+    tour_down_course_id: Mapped[int] = mapped_column(Integer, nullable=True)
+    tour_distance: Mapped[int] = mapped_column(Integer, nullable=True)
+    tour_difficulty: Mapped[int] = mapped_column(Integer, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=True,
+                                                  insert_default=datetime.now(settings.CONST.TIMEZONE))
+    update_datetime: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=True,
+                                                      onupdate=datetime.now(settings.CONST.TIMEZONE))
+

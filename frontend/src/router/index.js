@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { useAccountStore } from '@/stores/account'
 import { routes } from '@/stores/navigation'
 
-import MainViewVue from '@/views/MainView.vue'
+import HPViewVue from '@/views/HPView.vue'
 import OauthViewVue from '@/views/OauthView.vue'
 import HomeViewVue from '@/views/HomeView.vue'
 import SupportViewVue from '@/views/SupportView.vue'
@@ -12,8 +12,8 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      name: "Main",
-      component: MainViewVue
+      name: "HP",
+      component: HPViewVue
     },
     {
       path: "/oauth",

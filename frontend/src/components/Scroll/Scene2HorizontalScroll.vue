@@ -1,4 +1,9 @@
 <script setup>
+import { ref } from 'vue';
+
+const minHeight = ref(800)
+const scrollWidth = ref(minHeight.value * 7.1)
+
 const scene2Gsap = () => {
   const shapes = document.querySelectorAll(".scene-2 .shape")
   const fundamental_size = 1400
@@ -9,11 +14,10 @@ const scene2Gsap = () => {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: shape,
-        start: "top 30%",
-        end: "top -500%",
+        start: "top 25%",
+        end: `top -${minHeight.value * 0.88}%`,
         scrub: true,
         pin: true,
-        // markers: true,
       }
     });
     
@@ -25,7 +29,7 @@ const scene2Gsap = () => {
     tl.fromTo(shape, {
       transform: `translateX(${fundamental_size * i + (fundamental_size / 2)}px)`,
     }, {
-      transform: `translateX(${-fundamental_size}px)`,
+      x: `-=${scrollWidth.value}`,
     });
   });
 }
@@ -39,7 +43,8 @@ defineExpose({
   <section class="section-wrapper scene-2">
     <div class="h-scroll-wrapper">
       <div class="show-box-wrapper">
-        <div class="shape pos-abs" v-for="_ in 5"></div>
+        <img class="shape pos-abs" v-for="i in 5" :key="i">
+        <!-- <img class="shape pos-abs" v-for="i in 5" :key="i" :src="`/${i}.jpg`" loading="lazy"> -->
       </div>
     </div>
   </section>
@@ -56,7 +61,7 @@ defineExpose({
   // linear-gradient(135deg, #ff9966, #ff5e62), 
   // linear-gradient(135deg, #141e30, #527dae);
 
-  min-height: 500vh;
+  min-height: calc(v-bind('minHeight') * 1vh);
   padding: 2 * @base;
   background-image: linear-gradient(135deg, #ff5e62, #ff9966);
 
@@ -68,7 +73,9 @@ defineExpose({
         width: 20 * @base;
         height: 30 * @base;
         border-radius: @base;
-        background: linear-gradient(135deg, #141e30, #527dae);
+        // background-image: url(1.jpg);
+        background-size: cover;
+        // background: linear-gradient(135deg, #141e30, #527dae);
         will-change: transform;
       }
     }

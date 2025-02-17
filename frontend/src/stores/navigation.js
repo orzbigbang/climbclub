@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const routes = {
-  main: '/',
+  HP: '/',
   home: '/home',
   login: '/oauth/login',
   signup: '/oauth/signup',
@@ -56,9 +56,9 @@ export const useNavigationStore = defineStore('navigation', () => {
     }
   }
 
-  function navigateMain() {
+  function navigateHP() {
     navigationTarget.value = {
-      path: routes.main,
+      path: routes.HP,
     }
   }
 
@@ -74,7 +74,7 @@ export const useNavigationStore = defineStore('navigation', () => {
     navigateLogin,
     navigateSignup,
     navigateHome,
-    navigateMain,
+    navigateHP,
     navigateSupport,
   }
 })

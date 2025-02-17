@@ -56,7 +56,7 @@ onUnmounted(() => {
 
   .container {
     height: 100vh;
-    overflow-y: hidden;  // TODO for develop only
+    overflow: hidden;  // TODO for develop only
     font-family: "Smooch Sans";
     color: @color;
     font-size: 48px;
